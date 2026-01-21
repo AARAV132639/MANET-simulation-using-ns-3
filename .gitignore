@@ -1,0 +1,18 @@
+# Ignore build and temp files
+*.o
+*.out
+*.log
+*.swp
+*.tmp
+
+# Ignore ns-3 related artifacts
+build/
+cmake-cache/
+scratch/
+
+# Ignore result files (can be enabled later)
+results/*.csv
+results/*.xml
+
+# OS / editor
+.vscode/

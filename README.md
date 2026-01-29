@@ -1,77 +1,102 @@
-# MANET Security Analysis using ns-3
+# MANET Swarm Security Analysis using ns-3
 
-## Overview
-This project studies **security attacks in Mobile Ad Hoc Networks (MANETs)** using the **ns-3 network simulator**.  
-The goal is to understand how malicious nodes affect routing performance and to compare network behavior under normal and attack scenarios.
+## Project Overview
+This project studies the behavior of a **Mobile Ad Hoc Network (MANET)** formed by a small drone swarm under normal conditions and under **routing attacks**. The focus is on understanding how **blackhole and grayhole attacks** affect network performance metrics such as Packet Delivery Ratio (PDR), delay, and throughput.
 
----
+The project is implemented using the **ns-3 network simulator** with Wi-Fi ad-hoc communication and AODV routing.
 
-## Tools Used
-- ns-3 Network Simulator
-- C++
-- Ubuntu (WSL)
-- VS Code
-- Routing Protocol: AODV
-- Wireless: IEEE 802.11b (Ad-hoc)
+This repository represents a **locked, small-scale validated study**. Large-scale swarm simulations and advanced extensions are intentionally planned as a separate follow-up project.
 
 ---
 
-## Project Structure
-- `src/`
-  - `manet_baseline.cc` – Normal MANET scenario
-  - `manet_blackhole.cc` – Fixed-node blackhole attack
-- `docs/` – For report and explanations
-- `results/` – For output files (CSV/XML later)
-
-The source files are linked to `ns-3-dev/scratch/` using **symbolic links**, so ns-3 itself is not modified.
+## Objectives
+- Build a baseline MANET using Wi-Fi and AODV
+- Model a **fixed-node blackhole attack**
+- Model a **grayhole attack with probabilistic packet dropping**
+- Compare baseline vs attack scenarios using quantitative metrics
+- Visualize and interpret results correctly
 
 ---
 
-## Experiments Completed
-
-### 1. Baseline MANET
-- 30 nodes
-- AODV routing
-- UDP traffic
-- Fixed node positions
-- Metrics collected: PDR, delay, throughput
-
-**Result:**  
-Baseline network shows stable performance with high packet delivery ratio.
+## Simulation Setup
+- Simulator: ns-3
+- Routing protocol: AODV
+- MAC/PHY: IEEE 802.11 ad-hoc
+- Transport: UDP
+- Mobility: Controlled patrol-based movement
+- Swarm size: Small unit (5–7 nodes)
+- Simulation area: 300 × 300
+- Attacks introduced during active patrol
 
 ---
 
-### 2. Blackhole Attack
-- One malicious node (node 5)
-- Malicious node drops all packets
-- Topology arranged to force traffic through the attacker
+## Implemented Scenarios
+1. **Baseline MANET**
+   - Normal AODV routing
+   - No malicious behavior
 
-**Result:**  
-Packet Delivery Ratio drops to **0%**, proving successful blackhole attack.
+2. **Blackhole Attack**
+   - One fixed malicious node
+   - Drops all received packets
 
----
-
-## Key Observation
-If nodes are within wireless range, MANET routing prefers **direct communication** and may bypass intermediate nodes.  
-To demonstrate blackhole attacks, the attacker must lie on the forwarding path.
-
----
-
-## Current Status
-- Baseline MANET implemented and verified
-- Fixed-node blackhole attack implemented and verified
-- Code is stable and ready for extension
+3. **Grayhole Attack**
+   - One fixed malicious node
+   - Drops packets probabilistically
+   - Demonstrates stealthy degradation behavior
 
 ---
 
-## To-Do
-- Implement grayhole attack
-- Add random attacker selection
-- Enable mobility scenarios
-- Export results and plot graphs
-- Compare results with existing research papers
+## Metrics Collected
+- Packet Delivery Ratio (PDR)
+- Average End-to-End Delay
+- Aggregate Throughput
+
+Metrics are collected using **FlowMonitor** and exported as XML files.
 
 ---
 
-## Author
-Aarav Kumar
+## Visualization
+Results are visualized using a Python script that parses FlowMonitor XML output and generates bar plots for:
+- PDR comparison
+- Delay comparison
+- Throughput comparison
+
+This visualization pipeline is stable and reusable for future scaling experiments.
+
+---
+
+## File Structure (Logical)
+- `manet_baseline.cc` — baseline MANET simulation
+- `manet_blackhole.cc` — fixed-node blackhole attack
+- `manet_grayhole.cc` — fixed-node grayhole attack
+- `visualize_result.py` — result parsing and plotting
+- `README.md` — project documentation
+
+(Source files are symlinked into ns-3 `scratch/` for execution.)
+
+---
+
+## Project Status
+**Frozen / Locked**
+
+- Core objectives achieved
+- Results validated and visualized
+- No further scaling in this repository
+
+Large-scale swarm simulations, energy models, and advanced attack mitigation are planned as a **separate project** to preserve clarity and reproducibility.
+
+---
+
+## Key Insight
+Stealthy grayhole attacks may not always reduce packet delivery ratio. Instead, they can degrade **network stability and predictability**, highlighting why PDR alone is insufficient for security evaluation in MANETs.
+
+---
+
+## Future Work (Out of Scope for This Repo)
+- Large-scale drone swarms (30+ nodes)
+- Energy-aware routing
+- Multi-unit coordination
+- Attack detection and mitigation
+- Mission-level performance analysis
+
+---

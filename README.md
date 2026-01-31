@@ -24,7 +24,7 @@ This repository represents a **locked, small-scale validated study**. Large-scal
 - MAC/PHY: IEEE 802.11 ad-hoc
 - Transport: UDP
 - Mobility: Controlled patrol-based movement
-- Swarm size: Small unit (5–7 nodes)
+- Swarm size: Small unit (7 nodes)
 - Simulation area: 300 × 300
 - Attacks introduced during active patrol
 
